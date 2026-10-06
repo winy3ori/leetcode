@@ -1,41 +1,30 @@
 class Solution {
     public void reorderList(ListNode head) {
 
-        // find center
-        ListNode slow = head;
-        ListNode fast = head;
-        while (fast.next != null && fast.next.next != null){
+        ListNode slow = head, fast = head;
+        while(fast != null && fast.next != null){
             slow = slow.next;
             fast = fast.next.next;
         }
 
-        // slice List (haed / sec)
-        ListNode sec = slow.next;
-        slow.next = null;
-
-        // reverse sec list
-        ListNode prev = null;
-        ListNode current = sec;  
-        while (current != null){
-            ListNode next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
+        ListNode prev = null, curr = slow;
+        while(curr != null){
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
         }
 
-        // add haed/second list
-        ListNode first = head;
-        ListNode second = prev;
-        while (second != null){
-            ListNode firstNext = first.next;
-            ListNode secondNext = second.next;
+        ListNode first = head, second = prev;
+        while(second.next != null){
+            ListNode tmp1 = first.next;
+            ListNode tmp2 = second.next;
 
             first.next = second;
-            second.next = firstNext;
+            second.next = tmp1;
 
-            first = firstNext;
-            second = secondNext;
+            first = tmp1;
+            second = tmp2;
         }
-
     }
 }
